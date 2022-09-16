@@ -2,7 +2,7 @@
 
     	<div class="sidebar-wrapper">
             <div class="logo">
-                <a href="/dashbord" class="simple-text">
+                <a href="/dashboard" class="simple-text">
                     
                     <img style="height:70px;width:180px; margin-left:10px;" src="{{asset('images/logo.png')}}" alt="">
 
@@ -31,12 +31,28 @@
                 </li>
                 @endif
                 <li class="{{request()->is('categories') ? 'active' : ''}}">
-                    <a href="categories">
+                    <a href="/categories">
                         <i class="pe-7s-car"></i>
                         <p>Categories</p>
                     </a>
                 </li>
-                
+                <li class="{{request()->is('categories/create') ? 'active' : ''}}">
+                    <a href="/categories/create">
+                        <i class="pe-7s-car"></i>
+                        <p>Add Categories</p>
+                    </a>
+                </li>
+                <li class="{{request()->is('products') ? 'active' : ''}}">
+                    <a href="/products">
+                        <i class="pe-7s-car"></i>
+                        <p>Products</p>
+                    </a>
+                </li><li class="{{request()->is('products/create') ? 'active' : ''}}">
+                    <a href="/products/create">
+                        <i class="pe-7s-car"></i>
+                        <p>Add Products</p>
+                    </a>
+                </li>
                
             </ul>
     	</div>

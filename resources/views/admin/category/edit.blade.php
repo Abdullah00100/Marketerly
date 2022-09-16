@@ -1,4 +1,4 @@
-@extends('admin.admin_layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 
@@ -50,7 +50,7 @@
 
             <div class="col-md-6" style="text-align:center ;">
                 @if($category->image)
-                <img style="width:150px;height:150px;margin-top:7px;border-radius: 30%;;" src="{{asset('images/'. $category->image)}}" alt="">
+                <img style="width:150px;height:150px;margin-top:7px;border-radius: 30%;;" src="{{asset('assets/uploads/categories/'. $category->image)}}" alt="">
                 @endif
             </div>
             <div class="col-md-6" style="margin-top:6px ;">

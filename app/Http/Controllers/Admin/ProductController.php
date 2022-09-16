@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
-class CategoryController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +17,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-        return view('admin.category.index' , ['categories'=>$categories]);
+        $Products = Product::all();
+        return view('admin.product.index',[
+            'products' => $Products
+        ]);
     }
 
     /**
@@ -27,8 +29,9 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
-        return view('admin.category.create');
+    {
+        $categories = Category::all();
+        return view('admin.product.create',['categories' => $categories]);
     }
 
     /**
@@ -42,26 +45,31 @@ class CategoryController extends Controller
         $newImageName = time() . '-' . $request->name . '.' . 
         $request->image->extension();
 
-        $request->image->move(public_path('assets/uploads/categories'),$newImageName);
+        $request->image->move(public_path('assets/uploads/products'),$newImageName);
 
         
-        Category::create([
+        Product::create([
             'name'=>$request->input('name'),
+            'cate_id'=>$request->input('cate_id'),
             'slug'=>$request->input('slug'),
             'description'=>$request->input('description'),
+            'small_description'=>$request->input('small_description'),
+            'original_price'=>$request->input('original_price'),
+            'selling_price'=>$request->input('selling_price'),
+            'qty'=>$request->input('qty'),
+            'tax'=>$request->input('tax'),
             'image'=>$newImageName,
-            'status'=>$request->input('Status') == TRUE ? '1':'0',
-            'popular'=>$request->input('Popular') == TRUE ? '1':'0',
+            'status'=>$request->input('status') == TRUE ? '1':'0',
+            'trending'=>$request->input('trending') == TRUE ? '1':'0',
             'meta_title'=>$request->input('meta_title'),
             'meta_keywords'=>$request->input('meta_keywords'),
-            'meta_descrip'=>$request->input('meta_descrip'),
+            'meta_description'=>$request->input('meta_descrip'),
 
         ]);//in this way we need to make a new proparty call fillable to out model
 
 
-        return redirect('categories')->with('status','Category Created successfully');
+        return redirect('products')->with('status','Product Created successfully');
     }
-    
 
     /**
      * Display the specified resource.
@@ -82,8 +90,10 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::find($id);
-        return view('admin.category.edit',['category'=>$category]);
+        $product = Product::find($id);
+        $categories = Category::all();
+        
+        return view('admin.product.edit',['product'=>$product,'categories'=>$categories]);
     }
 
     /**
@@ -94,10 +104,12 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   $category = Category::find($id);
+    {
+        $product = Product::find($id);
+
         if($request->hasFile('image'))
         {
-            $path = 'assets/uploads/categories/'.$category->image;
+            $path = 'assets/uploads/products/'.$product->image;
 
             if (File::exists($path)) {
 
@@ -106,27 +118,34 @@ class CategoryController extends Controller
 
             $newImageName = time() . '-' . $request->name . '.' . 
             $request->image->extension();
-            $request->image->move(public_path('assets/uploads/categories'),$newImageName);
+            $request->image->move(public_path('assets/uploads/products'),$newImageName);
 
         }else{
-            $newImageName = $category->image;
+            $newImageName = $product->image;
         }
 
-        $category->update([
+        
+        $product->update([
             'name'=>$request->input('name'),
+            'cate_id'=>$request->input('cate_id'),
             'slug'=>$request->input('slug'),
             'description'=>$request->input('description'),
+            'small_description'=>$request->input('small_description'),
+            'original_price'=>$request->input('original_price'),
+            'selling_price'=>$request->input('selling_price'),
+            'qty'=>$request->input('qty'),
+            'tax'=>$request->input('tax'),
             'image'=>$newImageName,
-            'status'=>$request->input('Status') == TRUE ? '1':'0',
-            'popular'=>$request->input('Popular') == TRUE ? '1':'0',
+            'status'=>$request->input('status') == TRUE ? '1':'0',
+            'trending'=>$request->input('trending') == TRUE ? '1':'0',
             'meta_title'=>$request->input('meta_title'),
             'meta_keywords'=>$request->input('meta_keywords'),
-            'meta_descrip'=>$request->input('meta_descrip'),
+            'meta_description'=>$request->input('meta_descrip'),
 
-        ]);
+        ]);//in this way we need to make a new proparty call fillable to out model
 
-        return redirect('categories')->with('status','Category Updated successfully');
 
+        return redirect('products')->with('status','Product Updated successfully');
     }
 
     /**
@@ -137,16 +156,16 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::find($id);
+        $product = Product::find($id);
 
-        $path = 'assets/uploads/categories/'.$category->image;
+        $path = 'assets/uploads/products/'.$product->image;
 
             if (File::exists($path)) {
 
                 File::delete($path);
             }
-        $category->delete();
+        $product->delete();
 
-        return redirect('categories')->with('status','Category Deleted successfully');
+        return redirect('products')->with('status','Product Deleted successfully');
     }
 }

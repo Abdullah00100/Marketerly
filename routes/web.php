@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\FrontendController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Models\Category;
 
 /*
@@ -30,5 +31,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', [FrontendController::class,'index']);
 
+    Route::resource('products',ProductController::class);
     Route::resource('categories',CategoryController::class);
+
 });
