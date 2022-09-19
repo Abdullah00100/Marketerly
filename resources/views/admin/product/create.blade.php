@@ -53,7 +53,7 @@
             </div>
             <div class="col-md-6"  style="margin-bottom:6px;">
                 <label for="">Status</label>
-                <input type="checkbox" name="status" value="1" checked>
+                <input type="checkbox" name="status" value="1">
             </div>
             <div class="col-md-6" style="margin-bottom:6px ;">
                 <label for="">Trending</label>

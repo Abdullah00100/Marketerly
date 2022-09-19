@@ -39,14 +39,14 @@
 
     <div class="wrapper">
 
-        @include('layouts/inc/sidebar')
+        @include('layouts/inc/admin_sidebar')
 
 
         <div class="main-panel">
 
 
 
-            @include('layouts/inc/navbar')
+            @include('layouts/inc/admin_navbar')
 
 
             <div class="content" style="padding: 40px 50px ;">
