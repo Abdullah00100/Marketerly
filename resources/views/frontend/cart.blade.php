@@ -48,7 +48,8 @@
            
                 
             @else
-            <h1 style="text-align: center; color:rgb(16, 171, 171); ">Your Cart is Empty</h1>
+            <h1 style="text-align: center; color:rgb(16, 171, 171); ">Your Cart is Empty <i class="bi bi-emoji-frown-fill"></i>
+            </h1>
             @endif
             
         </div>
